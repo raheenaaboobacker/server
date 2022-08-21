@@ -40,10 +40,14 @@ app.post('/user-register', (req, res) => {
                                     var id = details._id
                                     let registerdata = {
                                         login_id: id,
+                                        shop_id: req.body.shop_id,
                                         name: req.body.name,
                                         age: req.body.age,
+                                        card_no: req.body.card_no,
+                                        card_type: req.body.card_type,
                                         phone: req.body.phone,
                                         address: req.body.address,
+                                        members: req.body.menbers
                                         
                                     }
                                     register.findOne({ phone: registerdata.phone })

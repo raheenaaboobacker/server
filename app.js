@@ -5,7 +5,7 @@ const RegisterRouter = require('./src/routes/registerRouter')
 const LoginRouter = require('./src/routes/loginRouter')
 
 app.use(express.json())
-app.use(express.urlencoded({extended:true})) 
+
 
 
 app.use((req, res, next) => {
@@ -21,9 +21,9 @@ app.use((req, res, next) => {
     next();
   });
  
-
+  app.use(express.urlencoded({extended:true})) 
 app.use('/register',RegisterRouter)
-app.use('/login',LoginRouter)
+// app.use('/login',LoginRouter)
 
 
 
