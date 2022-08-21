@@ -1,11 +1,14 @@
 const express = require('express')
 const app = express()
-
+const bodyParser=require('body-parser');
 const RegisterRouter = require('./src/routes/registerRouter')
-const LoginRouter = require('./src/routes/loginRouter')
+const UserRouter = require('./src/routes/userRouter')
+const ShopRouter = require('./src/routes/shopRouter')
+const VolunteerRouter = require('./src/routes/volunteerRouter')
+const FeedbackRouter = require('./src/routes/feedbackRouter')
 
 app.use(express.json())
-
+app.use(bodyParser.urlencoded({extended:true}))
 
 
 app.use((req, res, next) => {
@@ -21,9 +24,13 @@ app.use((req, res, next) => {
     next();
   });
  
-  app.use(express.urlencoded({extended:true})) 
+  
+ 
 app.use('/register',RegisterRouter)
-// app.use('/login',LoginRouter)
+app.use('/ration',ShopRouter)
+app.use('/volunteer',VolunteerRouter)
+app.use('/user',UserRouter)
+app.use('/feedback',FeedbackRouter)
 
 
 

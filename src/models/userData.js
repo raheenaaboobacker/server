@@ -12,6 +12,7 @@ const UserSchema = new Schema({
      phone:{ type: String, required: true },
      address:{ type: String, required: true },
      members:{ type: Array, required: true },
+     
 
       
 })
