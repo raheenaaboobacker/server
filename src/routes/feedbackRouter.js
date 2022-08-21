@@ -22,6 +22,7 @@ feedbackRouter.get('/view-feedback', (req, res) => {
                     data: data
                 })
             }
+            
         })
 
 })
