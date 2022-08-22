@@ -7,7 +7,8 @@ const login = require('../models/loginData')
 
 
 shopRouter.get('/view-shop', (req, res) => {
-    rationRegister.find()
+    
+    login.find({role:1})
         .then(function (data) {
             if (data == 0) {
                 return res.status(401).json({

@@ -9,7 +9,7 @@ const volunteer = require('../models/volunteerData')
 
 
 RegisterRouter.post('/user-register', (req, res) => {
-    console.log("password" + req.body.username)
+    console.log("data " + JSON.stringify(req.body))
     bcrypt.hash(req.body.password, 10, function (err, hashedPass) {
         if (err) {
             return res.status(400).json({
@@ -49,15 +49,15 @@ RegisterRouter.post('/user-register', (req, res) => {
                                         card_type: req.body.card_type,
                                         phone: req.body.phone,
                                         address: req.body.address,
-                                        members: req.body.menbers,
+                                        members: req.body.members,
                                         
                                         
                                     }
-                                    register.findOne({ phone: registerdata.phone })
+                                    userRegister.findOne({ phone: registerdata.phone })
                                         .then((mobile) => {
                                             if (!mobile) {
                                                 
-                                                    var register_item = register(registerdata)
+                                                    var register_item = userRegister(registerdata)
                                                     register_item.save()
                                                         .then(() => {
                                                             res.status(200).json({
@@ -217,7 +217,6 @@ RegisterRouter.post('/volunteer-register', (req, res) => {
                                         name: req.body.name,
                                         address: req.body.address,
                                         phone: req.body.phone,
-                                        email: req.body.email,
                                                                                
                                     }
                                     volunteer.findOne({ phone: registerdata.phone })
