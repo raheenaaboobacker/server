@@ -6,6 +6,7 @@ const UserRouter = require('./src/routes/userRouter')
 const ShopRouter = require('./src/routes/shopRouter')
 const VolunteerRouter = require('./src/routes/volunteerRouter')
 const FeedbackRouter = require('./src/routes/feedbackRouter')
+const LoginRouter=require('./src/routes/loginRouter')
 
 const cors=require('cors')
 app.use(cors());
@@ -27,7 +28,7 @@ app.use((req, res, next) => {
   });
  
   
- 
+ app.use('/',LoginRouter)
 app.use('/register',RegisterRouter)
 app.use('/ration',ShopRouter)
 app.use('/volunteer',VolunteerRouter)

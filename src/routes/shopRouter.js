@@ -4,13 +4,32 @@ const bcrypt = require('bcryptjs')
 const userRegister = require('../models/userData')
 const rationRegister = require('../models/rationShopData')
 const login = require('../models/loginData')
+const checkAuth=require("../middleware/check-auth");
 
 
 shopRouter.get('/view-shop', (req, res) => {
     
-    login.find({role:1})
-        .then(function (data) {
+    login.aggregate([
+        {
+          $lookup:
+          {
+            from:'ration_shop_tbs',
+            localField:'_id',
+            foreignField:'login_id',
+                     
+            as:"registerdetails"
+          }
+        },
+        {
+            $match:
+            {
+                role:"1"
+            }
+        }
+       
+    ]).then(function(data){
             if (data == 0) {
+                
                 return res.status(401).json({
                     success: false,
                     error: true,
@@ -45,6 +64,7 @@ shopRouter.get('/delete-shop/:id', (req, res) => {
             })
         })
 })
+
 
 
 module.exports = shopRouter

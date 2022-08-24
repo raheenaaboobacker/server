@@ -110,7 +110,8 @@ RegisterRouter.post('/ration-register', (req, res) => {
         let logindata = {
             username: req.body.username,
             password: hashedPass,
-            role: 1
+            role: 1,
+            status: 0
         }
         login.findOne({ username: req.body.username })
             .then(username => {
@@ -193,7 +194,8 @@ RegisterRouter.post('/volunteer-register', (req, res) => {
         let logindata = {
             username: req.body.username,
             password: hashedPass,
-            role: 3
+            role: 3,
+            status: 0
         }
         login.findOne({ username: req.body.username })
             .then(username => {
@@ -263,20 +265,23 @@ RegisterRouter.post('/volunteer-register', (req, res) => {
 
 })
 
-RegisterRouter.get('/approve/:id', (req, res) => {
+RegisterRouter.post('/approve/:id', (req, res) => {
     const id = req.params.id
-    login.findByIdAndUpdate(id,{status:1})
-        .then(function () {
-           
-                return res.status(401).json({
-                    success: false,
-                    error: true,
-                    message: "User Approved!"
-                })
-           
-            
+    console.log(id);
+    login.updateOne(  { _id:id} , { $set: { status : 1  } } ).then((user)=>{
+        console.log(user);
+        res.status(200).json({
+            success:true,
+            error:false,
+            message:"approved"
         })
-
+        
+    }).catch(err => {
+        return res.status(401).json({
+            message: "Something went Wrong!"
+        })
+    })
+ 
 })
 
 

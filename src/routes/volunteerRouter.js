@@ -6,8 +6,25 @@ const login = require('../models/loginData')
 
 
 volunteerRouter.get('/view-volunteer', (req, res) => {
-    volunteer.find()
-        .then(function (data) {
+    login.aggregate([
+        {
+          $lookup:
+          {
+            from:'volunteer_tbs',
+            localField:'_id',
+            foreignField:'login_id',
+                     
+            as:"registerdetails"
+          }
+        },
+        {
+            $match:
+            {
+                role:"3"
+            }
+        }
+       
+    ]).then(function (data) {
             if (data == 0) {
                 return res.status(401).json({
                     success: false,
@@ -26,9 +43,9 @@ volunteerRouter.get('/view-volunteer', (req, res) => {
 
 })
 
-volunteerRouter.get('/delete-volunteer/:id', (req, res) => {
+volunteerRouter.delete('/delete-volunteer/:id', (req, res) => {
     const id = req.params.id   // login id 
-    login.deleteOne({ _id: id })
+    login.deleteOne({ _id: id }) .then(function () {
     volunteer.deleteOne({ login_id: id })
         .then(function () {
             res.status(200).json({
@@ -37,11 +54,13 @@ volunteerRouter.get('/delete-volunteer/:id', (req, res) => {
                 message: 'volunteer deleted!'
             })
         })
+    })
         .catch(err => {
             return res.status(401).json({
                 message: "Something went Wrong!"
             })
         })
+    
 })
 
 volunteerRouter.get('/view-volunteer-profile/:id', (req, res) => {
