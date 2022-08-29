@@ -53,7 +53,7 @@ RegisterRouter.post('/user-register', (req, res) => {
                                         
                                         
                                     }
-                                    userRegister.findOne({ phone: registerdata.phone })
+                                    userRegister.findOne({ card_no: registerdata.card_no })
                                         .then((mobile) => {
                                             if (!mobile) {
                                                 
@@ -76,7 +76,7 @@ RegisterRouter.post('/user-register', (req, res) => {
                                                         res.status(401).json({
                                                             success: false,
                                                             error: true,
-                                                            message: 'Phone number is already registered with us'
+                                                            message: 'Ration Card number is already registered with us'
                                                         })
 
 

@@ -7,10 +7,11 @@ const ShopRouter = require('./src/routes/shopRouter')
 const VolunteerRouter = require('./src/routes/volunteerRouter')
 const FeedbackRouter = require('./src/routes/feedbackRouter')
 const LoginRouter=require('./src/routes/loginRouter')
-
+const subsidyRouter=require('./src/routes/subsidyRouter')
+const cartRouter=require('./src/routes/cartRouter')
 const cors=require('cors')
 app.use(cors());
-app.use(express.json())
+app.use(express.json())   //convert to json
 app.use(express.static('./public'));
 app.use(express.urlencoded({extended:true}))
 
@@ -34,7 +35,8 @@ app.use('/ration',ShopRouter)
 app.use('/volunteer',VolunteerRouter)
 app.use('/user',UserRouter)
 app.use('/feedback',FeedbackRouter)
-
+app.use('/subsidy',subsidyRouter)
+app.use('/cart',cartRouter)
 
 
 app.listen(5000,()=>{

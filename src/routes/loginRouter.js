@@ -88,12 +88,14 @@ LoginRouter.post('/login',(req, res)=>{
                 console.log("approved");
                 userRegister.findOne({login_id:id})
                 .then((registerData)=>{
+                    // console.log("membersss",registerData.members.length);
                     const token = jwt.sign(
                         {username:fetchedUser.username, role:fetchedUser.role,
                             userId:fetchedUser._id},
                         "secret_this_should_be_longer",
                         { expiresIn: "1h" }
                     )
+
                     res.status(200).json({
                         success:true,
                         error:false,
@@ -101,7 +103,9 @@ LoginRouter.post('/login',(req, res)=>{
                         expiresIn: 3600,
                          role:fetchedUser.role,
                         loginId: fetchedUser._id,
-                        name: registerData.name
+                        name: registerData.name,
+                        card_type:registerData.card_type,
+                        member_count:registerData.members.length+1
                     })
                 })
          

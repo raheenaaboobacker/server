@@ -131,29 +131,5 @@ userRouter.get("/view-user-Request",checkAuth,((req,res)=>{
        data:data
    })
 }) 
- //     packageBook.aggregate([{$lookup: {
- //         from: 'packagedatas',
- //         localField: 'package_id',
- //         foreignField: '_id',
- //         as: 'packagedata'
- //       }}, {$lookup: {
- //         from: 'registerdatas',
- //         localField: 'login_id',
- //         foreignField: 'login_id',
- //         as: 'userdata'
- //       }}, {$lookup: {
- //         from: 'login_tbs',
- //         localField: 'c_id',
- //         foreignField: '_id',
- //         as: 'cordinatordata'
- //       }}])
-//      .then(function(data){
-//          // console.log("dataaaa",data);   
-//     res.status(200).json({
-//         success:true,
-//         error:false,
-//         Userdetails:data
-//     })
-//  }) 
  }))
 module.exports = userRouter
