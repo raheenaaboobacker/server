@@ -40,7 +40,7 @@ LoginRouter.post('/login',(req, res)=>{
                         {username:fetchedUser.username, role:fetchedUser.role,
                             userId:fetchedUser._id},
                         "secret_this_should_be_longer",
-                        { expiresIn: "1h" }
+                        { expiresIn: "5h" }
                     )
                     res.status(200).json({
                         success:true,
@@ -61,7 +61,7 @@ LoginRouter.post('/login',(req, res)=>{
                     {username:fetchedUser.username, role:fetchedUser.role,
                         userId:fetchedUser._id},
                     "secret_this_should_be_longer",
-                    { expiresIn: "1h" }
+                    { expiresIn: "5h" }
                 )
                 res.status(200).json({
                     success:true,
@@ -104,6 +104,7 @@ LoginRouter.post('/login',(req, res)=>{
                          role:fetchedUser.role,
                         loginId: fetchedUser._id,
                         name: registerData.name,
+                        shop_id:registerData.shop_id,
                         card_type:registerData.card_type,
                         member_count:registerData.members.length+1
                     })
@@ -127,7 +128,7 @@ LoginRouter.post('/login',(req, res)=>{
                         {username:fetchedUser.username, userRole:fetchedUser.role,
                             userId:fetchedUser._id},
                         "secret_this_should_be_longer",
-                        { expiresIn: "1h" }
+                        { expiresIn: "5h" }
                     )
                     res.status(200).json({
                         success:true,
@@ -136,6 +137,7 @@ LoginRouter.post('/login',(req, res)=>{
                         expiresIn: 3600,
                          role:fetchedUser.role,
                         loginId: fetchedUser._id,
+                        shop_id:registerData.shop_id,
                         name: registerData.name
                     })
                 })

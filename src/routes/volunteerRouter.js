@@ -1,8 +1,10 @@
 const express = require('express')
 const volunteerRouter = express.Router()
 const bcrypt = require('bcryptjs')
+const order=require('../models/orderData')
 const volunteer = require('../models/volunteerData')
 const login = require('../models/loginData')
+const rationshop=require('../models/rationShopData')
 const checkAuth=require("../middleware/check-auth");
 var ObjectId = require('mongodb').ObjectID;
 
@@ -132,5 +134,72 @@ volunteerRouter.get('/view-volunteer-profile/:id', (req, res) => {
 
 })
 
+volunteerRouter.get('/view-order-items/:id',checkAuth,((req, res) => {
+    let id=req.params.id;
+    console.log(id);
+    // order.aggregate([
+    //     {
+    //         $lookup: {
+    //             from: 'volunteer_tb',
+    //             localField: 'shop_id',
+    //             foreignField: 'shop_id',
+    //             as: 'string'
+    //         }
+    //      },
+    //      {
+    //         $match:{
+    //             shop_id:ObjectId(id)
+    //         }
+    //      }
+    // ])
+    rationshop.aggregate(
+        [
+            {
+                $lookup: {
+                    from: 'order_tbs',
+                    localField: 'login_id',
+                    foreignField: 'shop_id',
+                    as: 'orderdata'
+                }
+            }, 
+             {
+                $unwind:'$orderdata'
+            }, 
+            {
+                $lookup: {
+                    from: 'user_tbs',
+                    localField: 'login_id',
+                    foreignField: 'shop_id',
+                    as: 'userdata'
+                }
+            },
+            {
+                $unwind:'$userdata'
+            },
+            {
+                $match:{
+                    login_id:ObjectId(id)
+                }
+            }
+        ])
+.then(function (data) {
+    if (data == 0) {
+        return res.status(401).json({
+            success: false,
+            error: true,
+            message: "No Item Found!"
+        })
+    }
+    else {
+        console.log(data);
+        return res.status(200).json({
+            success: true,
+            error: false,
+            data: data
+        })
+    }
+})
+
+}))
 
 module.exports = volunteerRouter

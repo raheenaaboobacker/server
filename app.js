@@ -9,6 +9,7 @@ const FeedbackRouter = require('./src/routes/feedbackRouter')
 const LoginRouter=require('./src/routes/loginRouter')
 const subsidyRouter=require('./src/routes/subsidyRouter')
 const cartRouter=require('./src/routes/cartRouter')
+const orderRouter=require('./src/routes/orderRouter')
 const cors=require('cors')
 app.use(cors());
 app.use(express.json())   //convert to json
@@ -37,6 +38,7 @@ app.use('/user',UserRouter)
 app.use('/feedback',FeedbackRouter)
 app.use('/subsidy',subsidyRouter)
 app.use('/cart',cartRouter)
+app.use('/order',orderRouter)
 
 
 app.listen(5000,()=>{

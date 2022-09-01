@@ -5,28 +5,46 @@ const checkAuth=require("../middleware/check-auth");
 var ObjectId = require('mongodb').ObjectID;
 
 cartRouter.post('/addCartItem',checkAuth,((req,res)=>{
-    console.log(req.body);
-    console.log(req.userData.userId);
+    // console.log(req.body);
+    // console.log(req.userData.userId);
     var item = {
         login_id:req.userData.userId,
         subsidy_id:req.body.cardId,
         item:req.body.itemname,
-        date:req.body.date
+        date:req.body.date,
+        qty:req.body.qty,
+        price:req.body.price
     }
-    console.log(item);
+    // console.log(item);
     var products=cart(item);
-    products.save().then(()=>{
-        res.status(200).json({
-            success:true,
-            error:false,
-            message:'Added to cart!'
-        })
+    var o_id =ObjectId(req.userData.userId);
+    cart.find({login_id:ObjectId(req.userData.userId),item:req.body.itemname})
+    .then(data=>{
+        console.log("cartdataaaa",data);
+        if(data!=0){
+            return res.status(401).json({
+                success: false,
+                error: true,
+                message: "Already in cart!"
+            })
+        }
+        else{
+            products.save().then(()=>{
+                res.status(200).json({
+                    success:true,
+                    error:false,
+                    message:'Added to cart!'
+                })
+            })
+            .catch(err=>{
+                return res.status(401).json({
+                    message: "Auth failed.please login"
+                })
+            })
+        }
+        
     })
-    .catch(err=>{
-        return res.status(401).json({
-            message: "Auth failed.please login"
-        })
-    })
+    
 }))
 
 cartRouter.get('/viewCartItem/:id', (req, res) => {
