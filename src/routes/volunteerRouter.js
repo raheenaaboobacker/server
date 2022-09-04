@@ -162,9 +162,9 @@ volunteerRouter.get('/view-order-items/:id',checkAuth,((req, res) => {
                     as: 'orderdata'
                 }
             }, 
-             {
-                $unwind:'$orderdata'
-            }, 
+            //  {
+            //     $unwind:'$orderdata'
+            // }, 
             {
                 $lookup: {
                     from: 'user_tbs',
@@ -173,9 +173,9 @@ volunteerRouter.get('/view-order-items/:id',checkAuth,((req, res) => {
                     as: 'userdata'
                 }
             },
-            {
-                $unwind:'$userdata'
-            },
+            // {
+            //     $unwind:'$userdata'
+            // },
             {
                 $match:{
                     login_id:ObjectId(id)
@@ -202,4 +202,22 @@ volunteerRouter.get('/view-order-items/:id',checkAuth,((req, res) => {
 
 }))
 
+// RegisterRouter.post('/delivered/:id', (req, res) => {
+//     const id = req.params.id
+//     console.log(id);
+//     login.updateOne(  { _id:id} , { $set: { status : 1  } } ).then((user)=>{
+//         console.log(user);
+//         res.status(200).json({
+//             success:true,
+//             error:false,
+//             message:"approved"
+//         })
+        
+//     }).catch(err => {
+//         return res.status(401).json({
+//             message: "Something went Wrong!"
+//         })
+//     })
+ 
+// })
 module.exports = volunteerRouter
